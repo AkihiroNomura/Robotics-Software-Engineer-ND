@@ -2,6 +2,22 @@
 
 ![screenshot](./image/office_screenshot.png)
 
+#### Procedure on Udacity Workspace
+
+```
+$ sudo apt-get update && sudo apt-get upgrade -y
+
+$ mkdir build
+$ cd build
+$ cmake ../
+$ make
+
+$ export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:/home/workspace/project1/build
+
+$ cd ..
+$ gazebo world/crayon_office
+```
+
 
 #### Directory Structure
 ```
