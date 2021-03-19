@@ -5,7 +5,6 @@
 ```
 % tree .
 .
-├── CMakeLists.txt
 ├── ball_chaser
 │   ├── CMakeLists.txt
 │   ├── launch
