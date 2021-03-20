@@ -88,20 +88,20 @@
     <collision name='left_wheel_collision'>
       <origin xyz="0 0 0" rpy=" 0 1.5707 1.5707"/> 
       <geometry>
-        <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.1" length="0.12"/>
       </geometry>
     </collision>
 
     <visual name='left_wheel_visual'>
       <origin xyz="0 0 0" rpy=" 0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.1" length="0.12"/>
       </geometry>
     </visual>
   </link>
   
   <joint type="continuous" name="left_wheel_hinge">
-    <origin xyz="0 0.15 0" rpy="0 0 0"/>
+    <origin xyz="0 0.2 0" rpy="0 0 0"/>
     <child link="left_wheel"/>
     <parent link="chassis"/>
     <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -110,7 +110,7 @@
   </joint>
   
   <gazebo reference="left_wheel">
-    <material>Gazebo/Green</material>
+    <material>Gazebo/White</material>
   </gazebo>
   
   <link name='right_wheel'>
@@ -127,20 +127,20 @@
     <collision name='right_wheel_collision'>
       <origin xyz="0 0 0" rpy=" 0 1.5707 1.5707"/> 
       <geometry>
-        <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.1" length="0.12"/>
       </geometry>
     </collision>
 
     <visual name='right_wheel_visual'>
       <origin xyz="0 0 0" rpy=" 0 1.5707 1.5707"/>
       <geometry>
-        <cylinder radius="0.1" length="0.05"/>
+        <cylinder radius="0.1" length="0.12"/>
       </geometry>
     </visual>
   </link>
   
   <joint type="continuous" name="right_wheel_hinge">
-    <origin xyz="0 -0.15 0" rpy="0 0 0"/>
+    <origin xyz="0 -0.2 0" rpy="0 0 0"/>
     <child link="right_wheel"/>
     <parent link="chassis"/>
     <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -149,7 +149,7 @@
   </joint>
   
   <gazebo reference="right_wheel">
-    <material>Gazebo/Green</material>
+    <material>Gazebo/White</material>
   </gazebo>
   
   <link name='camera'>  
@@ -186,7 +186,7 @@
   </joint>
   
   <gazebo reference="camera">
-    <material>Gazebo/Red</material>
+    <material>Gazebo/Yellow</material>
   </gazebo>
   
   <link name='hokuyo'>
@@ -218,10 +218,82 @@
   </link>
   
   <joint type="fixed" name="hokuyo_joint">
-    <origin xyz="0.15 0 0.1" rpy="0 0 0"/>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
     <child link="hokuyo"/>
-    <parent link="chassis"/>
+    <parent link="body"/>
     <axis xyz="0 1 0" rpy="0 0 0"/>
   </joint>
+  
+  <joint name="body_thin_body_joint" type="fixed">
+    <origin xyz="0 0 0.03" rpy="0 0 0" />
+    <parent link="thin_body"/>
+    <child link="body" />
+  </joint>
+
+  <link name='body'>
+    <pose>0 0 0.1 0 0 0</pose>
+
+    <inertial>
+      <mass value="5.0"/>
+      <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
+      <inertia
+          ixx="0.1" ixy="0" ixz="0"
+          iyy="0.1" iyz="0"
+          izz="0.1"
+      />
+    </inertial>
+
+    <collision name='collision'>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/> 
+      <geometry>
+        <box size=".2 .1 .1"/>
+      </geometry>
+    </collision>
+
+    <visual name='body_visual'>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size=".2 .1 .1"/>
+      </geometry>
+    </visual>
+  </link>
+  
+  <joint name="thin_body_chassis_joint" type="fixed">
+    <origin xyz="0 0 0.1" rpy="0 0 0" />
+    <parent link="chassis"/>
+    <child link="thin_body" />
+  </joint>
+
+  <link name='thin_body'>
+    <pose>0 0 0.1 0 0 0</pose>
+
+    <inertial>
+      <mass value="1.0"/>
+      <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
+      <inertia
+          ixx="0.1" ixy="0" ixz="0"
+          iyy="0.1" iyz="0"
+          izz="0.1"
+      />
+    </inertial>
+
+    <collision name='collision'>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/> 
+      <geometry>
+        <box size=".3 .15 .03"/>
+      </geometry>
+    </collision>
+
+    <visual name='thin_body_visual'>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size=".3 .15 .03"/>
+      </geometry>
+    </visual>
+  </link>
+  
+  <gazebo reference="thin_body">
+    <material>Gazebo/Red</material>
+  </gazebo>
 
 </robot>

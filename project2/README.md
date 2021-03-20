@@ -1,5 +1,6 @@
 ## Project: Go Chase It!
 
+![screenshot](./image/ball_chaser_screenshot.png)
 
 #### Directory Structure
 ```
