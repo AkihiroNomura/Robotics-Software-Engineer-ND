@@ -2,6 +2,10 @@
 
 ![screenshot](./screenshot/rtabmap_database_viewer.png)
 
+#### Download rtabmap.db
+
+https://drive.google.com/file/d/1z0JjigKFRnCxWtJFPesDfGQkXLJloAMo/view?usp=sharing
+
 #### Directory Structure
 ```
 % tree .
@@ -41,7 +45,6 @@
 │   │   └── my_robot.xacro
 │   └── worlds
 │       └── crayon_office.world
-├── rtabmap.db
 └── teleop_twist_keyboard
     ├── CHANGELOG.rst
     ├── CMakeLists.txt
