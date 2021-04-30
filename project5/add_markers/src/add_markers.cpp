@@ -7,7 +7,7 @@
 
 bool at_pickup_zone = false;
 bool at_drop_off_zone = false;
-double threshold = 0.1;
+double threshold = 0.2;
 
 double pickup_zone_x = 0.3;
 double pickup_zone_y = 3.0;
@@ -22,12 +22,15 @@ double distance(double x1, double x2, double y1, double y2)
 void odomCallback(const nav_msgs::Odometry &odom_msg)
 {
   // ROS_INFO("odom : x %lf  : y %lf\n", odom_msg.pose.pose.position.x, odom_msg.pose.pose.position.y); 
-  double current_position_x = odom_msg.pose.pose.position.x;
-  double current_position_y = odom_msg.pose.pose.position.y;
+  double current_position_x = odom_msg.pose.pose.position.y;
+  double current_position_y = (-1) * odom_msg.pose.pose.position.x;
+  
+  // ROS_INFO("current position : x %lf  : y %lf\n", current_position_x, current_position_y); 
+  // ROS_INFO("pickup distance: %lf \n", distance(current_position_x, pickup_zone_x, current_position_y, pickup_zone_y));
+  // ROS_INFO("drop off distance: %lf \n", distance(current_position_x, drop_off_zone_x, current_position_y, drop_off_zone_y));
   
   if (distance(current_position_x, pickup_zone_x, current_position_y, pickup_zone_y) <= threshold)
   {
-    ROS_INFO("Arrived at pickup zone");
     at_pickup_zone = true;
   }
   else
@@ -37,7 +40,6 @@ void odomCallback(const nav_msgs::Odometry &odom_msg)
   
   if (distance(current_position_x, drop_off_zone_x, current_position_y, drop_off_zone_y) <= threshold)
   {
-    ROS_INFO("Arrived at drop off zone");
     at_drop_off_zone = true;
   }
   else
@@ -118,6 +120,7 @@ int main( int argc, char** argv )
     {
       ros::spinOnce();
     }
+    ROS_INFO("Arrived at pickup zone");
     
     // Wait 5 seconds
     ros::Duration(5).sleep();
@@ -127,22 +130,20 @@ int main( int argc, char** argv )
     marker.action = visualization_msgs::Marker::DELETE;
     marker_pub.publish(marker);
     
-    // Wait 5 seconds
-    // ros::Duration(5).sleep();
-    
     // Set the marker action to ADD
     marker.action = visualization_msgs::Marker::ADD;
     
     // Set the pose of the marker for drop off zone
     marker.pose.position.x = drop_off_zone_x;
     marker.pose.position.y = drop_off_zone_y;
-    marker.pose.position.z = -1.0;
+    // marker.pose.position.z = -1.0;
     
     ROS_INFO("Go to drop off zone");
     while (!at_drop_off_zone)
     {
       ros::spinOnce();
     }
+    ROS_INFO("Arrived at drop off zone");
 
     // Publish the marker for drop off zone
     while (marker_pub.getNumSubscribers() < 1)
@@ -154,13 +155,8 @@ int main( int argc, char** argv )
       ROS_WARN_ONCE("Please create a subscriber to the marker");
       sleep(1);
     }
-    // ROS_INFO("Sending marker at drop off zone");
-    marker_pub.publish(marker);
     ROS_INFO("Drop off the marker!");
-
-    // Wait 10 seconds to finish.
-    // ros::Duration(10).sleep();
-    // ROS_INFO("About to finish...");
+    marker_pub.publish(marker);
     
     // ros::spin();
     r.sleep();
