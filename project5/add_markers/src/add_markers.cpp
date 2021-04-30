@@ -158,8 +158,6 @@ int main( int argc, char** argv )
     ROS_INFO("Drop off the marker!");
     marker_pub.publish(marker);
     
-    // ros::spin();
-    r.sleep();
-    // return 0;
+    return 0;
   }
 }
